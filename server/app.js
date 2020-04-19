@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 /**** Configuration ****/
-const port = process.env.PORT || 8088;
+const port = process.env.PORT || 8085;
 const app = express();
 
 app.use(cors());
