@@ -23,6 +23,7 @@ const KMS_DB = require('./db')(mongoose);
 /*Get the questions in the database*/
 app.get('/api/questions', async (request, response) => {
     const questions = await KMS_DB.getQuestions();
+    console.log(questions);
     response.json(questions);
 });
 

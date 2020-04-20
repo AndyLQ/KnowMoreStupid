@@ -5,7 +5,8 @@ import {Router} from "@reach/router";
 import AskQuestion from "./AskQuestion";
 
 class App extends Component {
-    API_URL = 'https://knowmore-stupid.herokuapp.com';
+    API_URL = 'https://knowmore-stupid.herokuapp.com/api';
+  /*  API_URL = 'http://localhost:8085/api';*/
 
     constructor(props) {
         super(props);
@@ -50,40 +51,26 @@ class App extends Component {
         this.getQuestions()
     }
 
-/*
     async submitAnswer(answer, questionID) {
-        const response = await fetch(`${this.API_URL}/questions`, {
+        const response = await fetch(`${this.API_URL}/questions/${questionID}`, {
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify({
-                title: title,
-                desc: desc,
-                answers: []
+                text: answer
             })
         });
         const data = await response.json();
         console.log("printing the response:", data);
     }
-*/
 
     setAnswer(answer, questionID) {
         if (answer !== "") {
-            let stateCopy = this.state.questions;
-            console.log(stateCopy);
-            let targetQuestion = stateCopy.find(question => question._id === questionID);
-            console.log(targetQuestion);
-            targetQuestion.answers.push({id:targetQuestion.answers.length, text: answer, votes: 0});
-            this.setState(
-                {
-                    questions: stateCopy
-                }
-            );
+            this.submitAnswer(answer, questionID);
+            this.getQuestions();
         }
     }
-
-
 
     vote(questionID, answerID, isUpvote) {
         let stateCopy = this.state.questions;
@@ -100,8 +87,22 @@ class App extends Component {
         this.setState({
                 questions: stateCopy
             });
-
     }
+
+    async voting(answer, questionID) {
+        const response = await fetch(`${this.API_URL}/questions/${questionID}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                text: answer
+            })
+        });
+        const data = await response.json();
+        console.log("printing the response:", data);
+    }
+
 
     render() {
         return (
