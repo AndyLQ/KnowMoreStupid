@@ -57,7 +57,7 @@ class App extends Component {
     }
 
     getQuestion(id) {
-        return this.state.questions.find(question => question.id === id);
+        return this.state.questions.find(question => question._id === id);
     }
 
     vote(questionID, answerID, isUpvote) {
