@@ -5,7 +5,7 @@ import {Router} from "@reach/router";
 import AskQuestion from "./AskQuestion";
 
 class App extends Component {
-    API_URL = process.env.REACT_APP_API_URL;
+    API_URL = 'https://knowmore-stupid.herokuapp.com';
 
     constructor(props) {
         super(props);
@@ -29,25 +29,52 @@ class App extends Component {
         })
     }
 
-
-    submitQuestion (title, desc) {
-        const AskQuestion = {
-            id: this.state.questions.reduce(
-                (prev, curr) => prev > curr.id ? prev : curr.id, 0) +1,
-            title: title,
-            desc: desc,
-            answers: []
-        };
-        this.setState({
-            questions: [...this.state.questions, AskQuestion]
-        })
+    getQuestion(id) {
+        return this.state.questions.find(question => question._id === id);
     }
 
+    async submitQuestion(title, desc) {
+        const response = await fetch(`${this.API_URL}/questions`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                title: title,
+                desc: desc,
+                answers: []
+            })
+        });
+        const data = await response.json();
+        console.log("printing the response:", data);
+        this.getQuestions()
+    }
+
+/*
+    async submitAnswer(answer, questionID) {
+        const response = await fetch(`${this.API_URL}/questions`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                title: title,
+                desc: desc,
+                answers: []
+            })
+        });
+        const data = await response.json();
+        console.log("printing the response:", data);
+    }
+*/
+
     setAnswer(answer, questionID) {
-        if (this.state.answers !== "") {
+        if (answer !== "") {
             let stateCopy = this.state.questions;
-            let targetQuestion = stateCopy.find(question => question.id === Number(questionID));
-            targetQuestion.answers.push({id:targetQuestion.answers.length ,text: answer, votes: 0});
+            console.log(stateCopy);
+            let targetQuestion = stateCopy.find(question => question._id === questionID);
+            console.log(targetQuestion);
+            targetQuestion.answers.push({id:targetQuestion.answers.length, text: answer, votes: 0});
             this.setState(
                 {
                     questions: stateCopy
@@ -56,16 +83,12 @@ class App extends Component {
         }
     }
 
-    getQuestion(id) {
-        return this.state.questions.find(question => question._id === id);
-    }
+
 
     vote(questionID, answerID, isUpvote) {
         let stateCopy = this.state.questions;
-        let targetQuestion = stateCopy.find(question => question._id === Number(questionID));
-        let targetAnswer = targetQuestion.answers.find(
-            answer => answer._id === Number(answerID)
-        );
+        let targetQuestion = stateCopy.find(question => question._id === questionID);
+        let targetAnswer = targetQuestion.answers.find(answer => answer._id === answerID);
 
         console.log(targetQuestion + targetAnswer);
         if (isUpvote) {

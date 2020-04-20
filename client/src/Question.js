@@ -5,7 +5,7 @@ import PostAnswer from "./PostAnswer";
 class Question extends Component {
 
     submit(answer) {
-        this.props.submit(answer, this.props._id);
+        this.props.submit(answer, this.props.id);
     }
 
     vote(answerID, isUpvote) {
@@ -14,7 +14,7 @@ class Question extends Component {
     }
 
     renderAnswers() {
-        const question = this.props.getQuestion(this.props.id_);
+        const question = this.props.getQuestion(this.props.id);
 
         if (question === undefined) {
            return <p>Loading</p>
@@ -27,8 +27,8 @@ class Question extends Component {
                     <ul>
                         <li>{answer.text}</li>
                         <p>Votes: {answer.votes}</p>
-                        <button onClick={() => this.vote(answer.id, true)}>Upvote</button>
-                        <button onClick={() => this.vote(answer.id, false)}>Downvote</button>
+                        <button onClick={() => this.vote(answer._id, true)}>Upvote</button>
+                        <button onClick={() => this.vote(answer._id, false)}>Downvote</button>
                     </ul>
                 </section>);
             }
@@ -36,7 +36,7 @@ class Question extends Component {
     }
 
     render() {
-        let question = this.props.getQuestion(this.props._id);
+        let question = this.props.getQuestion(this.props.id);
 
         return (
             <>

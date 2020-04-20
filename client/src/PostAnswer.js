@@ -5,7 +5,7 @@ class PostAnswer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            answers: ""
+            answer: ""
         }
     }
 
@@ -16,7 +16,7 @@ class PostAnswer extends Component {
     }
 
     onSubmit() {
-        this.props.submit(this.state.answers);
+        this.props.submit(this.state.answer);
     }
 
     render() {
