@@ -36,7 +36,7 @@ class App extends Component {
                 (prev, curr) => prev > curr.id ? prev : curr.id, 0) +1,
             title: title,
             desc: desc,
-            answer: []
+            answers: []
         };
         this.setState({
             questions: [...this.state.questions, AskQuestion]
@@ -44,10 +44,10 @@ class App extends Component {
     }
 
     setAnswer(answer, questionID) {
-        if (this.state.answer !== "") {
+        if (this.state.answers !== "") {
             let stateCopy = this.state.questions;
             let targetQuestion = stateCopy.find(question => question.id === Number(questionID));
-            targetQuestion.answer.push({id:targetQuestion.answer.length ,text: answer, votes: 0});
+            targetQuestion.answers.push({id:targetQuestion.answers.length ,text: answer, votes: 0});
             this.setState(
                 {
                     questions: stateCopy
@@ -62,8 +62,10 @@ class App extends Component {
 
     vote(questionID, answerID, isUpvote) {
         let stateCopy = this.state.questions;
-        let targetQuestion = stateCopy.find(question => question.id === Number(questionID));
-        let targetAnswer = targetQuestion.answer.find(answer => answer.id === Number(answerID));
+        let targetQuestion = stateCopy.find(question => question._id === Number(questionID));
+        let targetAnswer = targetQuestion.answers.find(
+            answer => answer._id === Number(answerID)
+        );
 
         console.log(targetQuestion + targetAnswer);
         if (isUpvote) {

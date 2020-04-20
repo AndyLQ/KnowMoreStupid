@@ -5,7 +5,7 @@ import PostAnswer from "./PostAnswer";
 class Question extends Component {
 
     submit(answer) {
-        this.props.submit(answer, this.props.id);
+        this.props.submit(answer, this.props._id);
     }
 
     vote(answerID, isUpvote) {
@@ -14,7 +14,7 @@ class Question extends Component {
     }
 
     renderAnswers() {
-        const question = this.props.getQuestion(this.props.id);
+        const question = this.props.getQuestion(this.props.id_);
 
         if (question === undefined) {
            return <p>Loading</p>
@@ -36,7 +36,7 @@ class Question extends Component {
     }
 
     render() {
-        let question = this.props.getQuestion(this.props.id);
+        let question = this.props.getQuestion(this.props._id);
 
         return (
             <>
