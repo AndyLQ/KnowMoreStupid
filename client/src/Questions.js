@@ -8,7 +8,9 @@ class Questions extends Component {
 
         //Lesson3
         let list = questions.map(
-            elm => <><li key={elm.id}><Link to={`/question/${elm.id}`}>{elm.title}<br/></Link></li> <br/></>
+            elm => <><li key={elm._id}>
+                <Link to={`/question/${elm._id}`}>{elm.title}<br/></Link>
+            </li><br/></>
         );
 
         return (

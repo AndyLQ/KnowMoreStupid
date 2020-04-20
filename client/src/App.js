@@ -3,7 +3,6 @@ import Question from './Question';
 import Questions from './Questions';
 import {Router} from "@reach/router";
 import AskQuestion from "./AskQuestion";
-import PostAnswer from "./PostAnswer";
 
 class App extends Component {
     API_URL = process.env.REACT_APP_API_URL;
@@ -24,11 +23,12 @@ class App extends Component {
     async getQuestions() {
         let url = `${this.API_URL}/questions`; // URL of the API.
         let result = await fetch(url); // Get the data
-        let json = await result.json(); // Turn it into json
+        let data = await result.json(); // Turn it into object
         return this.setState({ // Set it in the state
-            questions: json
+            questions: data
         })
     }
+
 
     submitQuestion (title, desc) {
         const AskQuestion = {
