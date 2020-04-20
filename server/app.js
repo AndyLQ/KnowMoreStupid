@@ -27,7 +27,7 @@ app.get('/api/questions', async (request, response) => {
 });
 
 app.get('/api/questions/:id', async (request, response) => {
-    let id = request.params.id;
+    let id = request.params._id;
     const question = await KMS_DB.getQuestion(id);
     response.json(question);
 });
